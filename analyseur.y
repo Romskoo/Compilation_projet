@@ -28,7 +28,7 @@ Image image ;
 }
 
 
-%token ALL AT CIRCLE COPY CREATE DELETE DESELECT DO DONE DUMP ELLIPSE FILL FONTSIZE FOREACH INVISIBLE LINE MOVE NOFILL POLYGON RADIUS RENAME RECTANGLE ROTATE SELECT SET TEXT THICKNESS VISIBLE WITH ZOOM EOL
+%token ALL AT CIRCLE COPY CREATE DELETE DESELECT DO DONE DUMP ELLIPSE FILL FONTSIZE FOREACH INVISIBLE LINE MOVE NOFILL POLYGON RADIUS RENAME RECTANGLE ROTATE SELECT SET TEXT THICKNESS VISIBLE WITH ZOOM EOL VIRGULE
 %token <nom> NOM 
 %token <coord> COORD 
 %token <entier> NUM 
@@ -54,6 +54,10 @@ Command:
     | CommandDelete EOL {}
     | CommandRename EOL {}
     | CommandSet EOL {}
+    | CommandSelect EOL {}
+    | CommandZoom EOL {}
+    | CommandMove EOL {}
+    | CommandDeselect EOL {}
     ;
 
 CommandCreate:
@@ -92,6 +96,35 @@ SetOptions:
   | INVISIBLE SetOptions {$$ = Set_visibility($2,"hidden");}
   | VISIBLE SetOptions {$$ = Set_visibility($2,"visible");}
   | FONTSIZE NUM SetOptions {$$ = Set_fontsize($3,$2);}
+  ;
+
+CommandSelect:
+  SELECT ALL {Set_selected_all(&image,1);}
+  | SELECT NOM SelectNames {Set_selected(&image,$2,1);}
+  ;
+
+SelectNames:
+  %empty {}
+  |  VIRGULE NOM SelectNames {Set_selected(&image,$2,1);}
+  ;
+
+CommandDeselect:
+  DESELECT ALL {Set_selected_all(&image,0);}
+  | DESELECT NOM DeselectNames {Set_selected(&image,$2,0);}
+  ;
+
+DeselectNames:
+  %empty {}
+  |  VIRGULE NOM DeselectNames {Set_selected(&image,$2,0);}
+  ;
+
+
+CommandMove:
+  MOVE COORD {Move(&image,$2);}
+  ;
+
+CommandZoom:
+  ZOOM COORD {}
   ;
 
 %%

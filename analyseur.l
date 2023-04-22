@@ -10,7 +10,7 @@ nom [a-zA-Z][a-zA-Z|0-9|-|_]*
 chaine_car \"(\\(.|\n)|[^\\"\n])*\"
 hexa [0-9a-fA-F]
 couleur #({hexa}{6}|{hexa}{3})
-num {integer}*
+num -?{integer}*
 coord \({num},{num}\)
 dimension {num}x{num}
 
@@ -47,6 +47,7 @@ dimension {num}x{num}
 [Vv][Ii][Ss][Ii][Bb][Ll][Ee] {return VISIBLE; }
 [Ww][Ii][Tt][Hh] {return WITH; }
 [Zz][Oo][Oo][Mm] {return ZOOM; }
+, {return VIRGULE;}
 
 {coord} {
   yylval.coord = strdup(yytext);

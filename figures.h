@@ -40,6 +40,7 @@ struct Figure{
     int coord2[2];
     int dimensions[2];
     char* texte;
+    int is_selected;
 };
 typedef struct Figure Figure;
 
@@ -83,5 +84,11 @@ Options* Set_visibility(Options* opt, char* visibility);
 Options* Set_fontsize(Options* opt, int fontsize);
 
 void Set_options(Image* image,char* figure,Options* options);
+
+void Set_selected(Image* image,char* nom,int is_selected);
+
+void Set_selected_all(Image* image, int is_selected);
+
+void Move(Image* image,char* mouvement);
 
 #endif

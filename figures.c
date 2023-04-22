@@ -19,6 +19,7 @@ Figure* Create_circle(char* nom,char* centre, int radius){
     figure->centre[1] = coord[1];
     figure->radius = radius;
     figure->options = *Default_options();
+    figure->is_selected = 0;
     return figure;
 }
 
@@ -32,6 +33,7 @@ Figure* Create_line(char* nom, char* coord1,char* coord2){
     coord = str_to_coord(coord2);
     figure->coord2[0] = coord[0];
     figure->coord2[1] = coord[1];
+    figure->is_selected = 0;
     return figure;
 }
 
@@ -45,6 +47,7 @@ Figure* Create_rectangle(char* nom,char* coords,char* dimensions){
     int* dimension = str_to_dimensions(dimensions);
     figure->dimensions[0] = dimension[0];
     figure->dimensions[1] = dimension[1];
+    figure->is_selected = 0;
     return figure;
 }
 
@@ -57,6 +60,7 @@ Figure* Create_text(char* nom,char* texte,char* coords){
     int* coord = str_to_coord(coords);
     figure->centre[0] = coord[0];
     figure->centre[1] = coord[1];
+    figure->is_selected = 0;
     return figure;
 }
 
@@ -133,6 +137,7 @@ void Dump_figures_file(Image image, char* file){
     FILE* fp = fopen( file, "w" );
 
     fprintf(fp,"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"800\" height=\"600\" viewBox=\"0 0 800 600\">");
+    fprintf(fp,"<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"0\" y=\"0\" width=\"800\" height=\"600\" fill=\"none\" stroke=\"black\"/>");
 
     for(int i=0;i<image.nb_figures;i++){
         switch(image.figures[i]->type){
@@ -224,7 +229,6 @@ Options* Set_fontsize(Options* opt, int fontsize){
 void Set_options(Image* image,char* figure,Options* options){
     
     int pos_figure = find_figure(*image,figure);
-
     if(options->flags.F_EDGE_COLOR == 1){
         image->figures[pos_figure]->options.couleur_tour = options->couleur_tour;
     }
@@ -244,6 +248,43 @@ void Set_options(Image* image,char* figure,Options* options){
     }
     if(options->flags.F_VISIBLE == 1){
         image->figures[pos_figure]->options.visibility = options->visibility;
+    }
+}
+
+void Set_selected(Image* image,char* nom,int is_selected){
+    int pos_figure = find_figure(*image,nom);
+    if(pos_figure == -1){
+        fprintf(stderr,"La figure %s n'a pas été trouvée\n",nom);
+        return;
+    }
+    image->figures[pos_figure]->is_selected = is_selected;
+}
+
+void Set_selected_all(Image* image, int is_selected){
+    for(int i=0;i<image->nb_figures;i++){
+        image->figures[i]->is_selected = is_selected;
+    }
+}
+
+void Move(Image* image,char* mouvement){
+    int* coords = str_to_coord(mouvement);
+    for(int i=0;i<image->nb_figures;i++){
+        if(image->figures[i]->is_selected == 1){
+            switch(image->figures[i]->type){
+                case T_CIRCLE:
+                case T_RECTANGLE:
+                case T_TEXT:
+                    image->figures[i]->centre[0] += coords[0];
+                    image->figures[i]->centre[1] += coords[1];
+                    break;
+                case T_LINE:
+                    image->figures[i]->coord1[0] += coords[0];
+                    image->figures[i]->coord1[1] += coords[1];
+                    image->figures[i]->coord2[0] += coords[0];
+                    image->figures[i]->coord2[1] += coords[1];
+                    break;
+            }       
+        }
     }
 }
 
