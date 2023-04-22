@@ -12,12 +12,20 @@ typedef enum {
     T_TEXT
 } Type_figure;
 
+typedef struct {
+    int F_FONTSIZE;
+    int F_VISIBLE;
+    int F_FILL_COLOR;
+    int F_EDGE_COLOR;
+    int F_THICKNESS;
+} OPTIONS_FLAGS;
+
 struct Options{
+    OPTIONS_FLAGS flags;
     char* couleur_tour;
     char* couleur_remplissage;
     int epaisseur;
-    int fill;
-    int visible;
+    char* visibility;
     int fontsize;
 };
 typedef struct Options Options;
@@ -70,9 +78,9 @@ Options* Set_epaisseur(Options* opt, int epaisseur);
 
 Options* Set_couleur_remplissage(Options* opt, char* couleur);
 
-Options* Set_fill(Options* opt,int is_filled);
+Options* Set_visibility(Options* opt, char* visibility);
 
-Options* Set_visible(Options* opt, int is_visible);
+Options* Set_fontsize(Options* opt, int fontsize);
 
 void Set_options(Image* image,char* figure,Options* options);
 

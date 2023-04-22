@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "figures.h"
 
 int yyerror(char*);
@@ -87,10 +88,10 @@ SetOptions:
   | COULEUR SetOptions {$$ = Set_couleur_tour($2,$1);}
   | THICKNESS NUM SetOptions {$$ = Set_epaisseur($3,$2);}
   | FILL WITH COULEUR SetOptions {$$ = Set_couleur_remplissage($4,$3); }
-  | NOFILL SetOptions {$$ = Set_fill($2,0);}
-  | INVISIBLE SetOptions {$$ = Set_visible($2,0);}
-  | VISIBLE SetOptions {$$ = Set_visible($2,1);}
-  | FONTSIZE NUM SetOptions {$$ = Set_fontsize($2,$1);}
+  | NOFILL SetOptions {$$ = Set_couleur_remplissage($2,"transparent");}
+  | INVISIBLE SetOptions {$$ = Set_visibility($2,"hidden");}
+  | VISIBLE SetOptions {$$ = Set_visibility($2,"visible");}
+  | FONTSIZE NUM SetOptions {$$ = Set_fontsize($3,$2);}
   ;
 
 %%
@@ -100,7 +101,15 @@ int yyerror(char *s) {
     return 0;
 }
 
-int main(void) {
+int main(int argc, char **argv) {
     Init_image(&image);
+
+    if(argc == 2){
+      fprintf(stdout,"MODE NON-INTERACTIF\n");
+      FILE * sfd = fopen(argv[1], "r" );
+      int fd = fileno(sfd);
+      dup2(fd,0);
+    }
+   
     yyparse();
 }

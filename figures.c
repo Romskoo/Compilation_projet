@@ -64,8 +64,12 @@ Options* Default_options(){
     options->couleur_tour = "black";
     options->couleur_remplissage = "black";
     options->epaisseur = 1;
-    options->fill = 1;
-    options->visible = 1;
+    options->visibility = "visible";
+    options->flags.F_FONTSIZE = 0;
+    options->flags.F_VISIBLE = 0;
+    options->flags.F_FILL_COLOR = 0;
+    options->flags.F_EDGE_COLOR = 0;
+    options->flags.F_THICKNESS = 0;
     return options;
 }
 
@@ -131,16 +135,16 @@ void Dump_figures_file(Image image, char* file){
     for(int i=0;i<image.nb_figures;i++){
         switch(image.figures[i]->type){
             case T_CIRCLE:
-                fprintf(fp,"<circle cx=\"%d\" cy=\"%d\" r=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" />",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->radius,image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.couleur_remplissage);
+                fprintf(fp,"<circle cx=\"%d\" cy=\"%d\" r=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" />",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->radius,image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.couleur_remplissage,image.figures[i]->options.visibility);
                 break;
             case T_LINE:
-                fprintf(fp,"<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"black\" />",image.figures[i]->coord1[0],image.figures[i]->coord1[1],image.figures[i]->coord2[0],image.figures[i]->coord2[1]);
+                fprintf(fp,"<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"%d\" visibility=\"%s\" />",image.figures[i]->coord1[0],image.figures[i]->coord1[1],image.figures[i]->coord2[0],image.figures[i]->coord2[1],image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.visibility);
                 break;
             case T_RECTANGLE:
-                fprintf(fp,"<rect x=\"%d\" y=\"%d\" height=\"%d\" width=\"%d\" />",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->dimensions[0],image.figures[i]->dimensions[1]);
+                fprintf(fp,"<rect x=\"%d\" y=\"%d\" height=\"%d\" width=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" />",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->dimensions[0],image.figures[i]->dimensions[1],image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.couleur_remplissage,image.figures[i]->options.visibility);
                 break;
             case T_TEXT:
-                fprintf(fp,"<text x=\"%d\" y=\"%d\" >%s</text>",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->texte);
+                fprintf(fp,"<text x=\"%d\" y=\"%d\"  visibility=\"%s\" >%s</text>",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->texte,image.figures[i]->options.visibility);
                 break;
         }
        
@@ -186,39 +190,56 @@ int find_figure(Image image, char* figure){
 
 Options* Set_couleur_tour(Options* opt,char* couleur){
     opt->couleur_tour = couleur;
+    opt->flags.F_EDGE_COLOR = 1;
     return opt;
 }
 
 Options* Set_epaisseur(Options* opt, int epaisseur){
     opt->epaisseur = epaisseur;
+    opt->flags.F_THICKNESS = 1;
     return opt;
 }
 
 Options* Set_couleur_remplissage(Options* opt, char* couleur){
     opt->couleur_remplissage = couleur;
+    opt->flags.F_FILL_COLOR = 1;
     return opt;
 }
 
-Options* Set_fill(Options* opt,int is_filled){
-    opt->fill = is_filled;
-    return opt;
-}
 
-Options* Set_visible(Options* opt, int is_visible){
-    opt->visible = is_visible;
+Options* Set_visibility(Options* opt, char* visibility){
+    opt->visibility = visibility;
+    opt->flags.F_VISIBLE = 1;
     return opt;
 }
 
 Options* Set_fontsize(Options* opt, int fontsize){
     opt->fontsize = fontsize;
+    opt->flags.F_FONTSIZE = 1;
     return opt;
 }
 
 void Set_options(Image* image,char* figure,Options* options){
-
+    
     int pos_figure = find_figure(*image,figure);
-    image->figures[pos_figure]->options = *options;
-    Dump_figures(*image);
+    //image->figures[pos_figure]->options = *options;
+
+    if(options->flags.F_EDGE_COLOR == 1){
+        image->figures[pos_figure]->options.couleur_tour = options->couleur_tour;
+    }
+    if(options->flags.F_FILL_COLOR == 1){
+        image->figures[pos_figure]->options.couleur_remplissage = options->couleur_remplissage;
+    }
+    if(options->flags.F_FONTSIZE == 1 && image->figures[pos_figure]->type == T_TEXT){
+        fprintf(stderr,"FONTSIZE est seulement disponible pour les figures de type TEXT\n");
+        image->figures[pos_figure]->options.couleur_tour = options->couleur_tour;
+    }
+    if(options->flags.F_THICKNESS == 1){
+        image->figures[pos_figure]->options.epaisseur = options->epaisseur;
+    }
+    if(options->flags.F_VISIBLE == 1){
+        image->figures[pos_figure]->options.visibility = options->visibility;
+    }
 }
 
 /*

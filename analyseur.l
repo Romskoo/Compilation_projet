@@ -6,7 +6,7 @@
 %}
 
 integer [0-9]
-nom [a-zA-Z][a-zA-Z|{integer}|-|_]*
+nom [a-zA-Z][a-zA-Z|0-9|-|_]*
 chaine_car \"(\\(.|\n)|[^\\"\n])*\"
 hexa [0-9a-fA-F]
 couleur #({hexa}{6}|{hexa}{3})

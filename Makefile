@@ -13,4 +13,4 @@ all: $(BIN).y $(BIN).l $(C).c $(U).c
 	$(CC) -o $(BIN).bin lex.yy.o $(BIN).tab.o $(C).o $(U).o -lm
 
 clean:
-	rm -fv $(U).o $(C).o $(BIN).bin $(BIN).tab.h $(BIN).tab.c lex.yy.c lex.yy.o $(BIN).tab.o lex.backup $(BIN).dot $(BIN).png $(BIN).output *~ 
+	rm -fv $(U).o $(C).o $(BIN).bin $(BIN).tab.h $(BIN).tab.c lex.yy.c lex.yy.o $(BIN).tab.o lex.backup $(BIN).dot $(BIN).png $(BIN).output *.svg *~ 
