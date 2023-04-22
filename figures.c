@@ -52,7 +52,8 @@ Figure* Create_text(char* nom,char* texte,char* coords){
     Figure* figure = malloc(sizeof(Figure));
     figure->nom = nom;
     figure->type = T_TEXT;
-    figure->texte = texte;
+    figure->texte = malloc(sizeof(texte));
+    strcpy(figure->texte,texte);
     int* coord = str_to_coord(coords);
     figure->centre[0] = coord[0];
     figure->centre[1] = coord[1];
@@ -65,6 +66,7 @@ Options* Default_options(){
     options->couleur_remplissage = "black";
     options->epaisseur = 1;
     options->visibility = "visible";
+    options->fontsize = 10;
     options->flags.F_FONTSIZE = 0;
     options->flags.F_VISIBLE = 0;
     options->flags.F_FILL_COLOR = 0;
@@ -144,7 +146,7 @@ void Dump_figures_file(Image image, char* file){
                 fprintf(fp,"<rect x=\"%d\" y=\"%d\" height=\"%d\" width=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" />",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->dimensions[0],image.figures[i]->dimensions[1],image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.couleur_remplissage,image.figures[i]->options.visibility);
                 break;
             case T_TEXT:
-                fprintf(fp,"<text x=\"%d\" y=\"%d\"  visibility=\"%s\" >%s</text>",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->texte,image.figures[i]->options.visibility);
+                fprintf(fp,"<text x=\"%d\" y=\"%d\" fill=\"%s\" font-size=\"%d\" visibility=\"%s\" >%s</text>",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->options.couleur_remplissage,image.figures[i]->options.fontsize,image.figures[i]->options.visibility,image.figures[i]->texte);
                 break;
         }
        
@@ -222,7 +224,6 @@ Options* Set_fontsize(Options* opt, int fontsize){
 void Set_options(Image* image,char* figure,Options* options){
     
     int pos_figure = find_figure(*image,figure);
-    //image->figures[pos_figure]->options = *options;
 
     if(options->flags.F_EDGE_COLOR == 1){
         image->figures[pos_figure]->options.couleur_tour = options->couleur_tour;
@@ -230,9 +231,13 @@ void Set_options(Image* image,char* figure,Options* options){
     if(options->flags.F_FILL_COLOR == 1){
         image->figures[pos_figure]->options.couleur_remplissage = options->couleur_remplissage;
     }
-    if(options->flags.F_FONTSIZE == 1 && image->figures[pos_figure]->type == T_TEXT){
-        fprintf(stderr,"FONTSIZE est seulement disponible pour les figures de type TEXT\n");
-        image->figures[pos_figure]->options.couleur_tour = options->couleur_tour;
+    if(options->flags.F_FONTSIZE == 1 ){   
+        if(image->figures[pos_figure]->type == T_TEXT){
+            image->figures[pos_figure]->options.fontsize = options->fontsize;
+        }    
+        else{
+            fprintf(stderr,"FONTSIZE est seulement disponible pour les figures de type TEXT\n");
+        }        
     }
     if(options->flags.F_THICKNESS == 1){
         image->figures[pos_figure]->options.epaisseur = options->epaisseur;

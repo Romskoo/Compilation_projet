@@ -14,4 +14,7 @@ SET test3 #000099
 
 SET test INVISIBLE
 
+CREATE TEXT test4 AT (60,150) "Bonjour"
+SET test4 FONTSIZE 60
+
 DUMP "test.svg"
