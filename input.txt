@@ -15,6 +15,7 @@ CREATE TEXT test4 AT (60,150) "Bonjour"
 SET test4 FONTSIZE 60
 
 SELECT ALL
-ZOOM 1,3
+ROTATE 20
+
 
 DUMP "test.svg"

@@ -30,7 +30,7 @@ struct Options{
     char* visibility;
     int fontsize;
     float zoom;
-    int rotate;
+    int rotation;
 };
 typedef struct Options Options;
 
@@ -96,5 +96,7 @@ void Set_selected_all(Image* image, int is_selected);
 void Move(Image* image,char* mouvement);
 
 void Zoom(Image* image,float zoom);
+
+void Rotate(Image* image,int rotation);
 
 #endif

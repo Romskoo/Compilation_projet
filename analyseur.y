@@ -50,7 +50,7 @@ S:
 
 
 Command:
-    EOL {printf("VIDE\n");}
+    EOL {}
     | CommandCreate EOL {}
     | CommandDump EOL {}
     | CommandDelete EOL {}
@@ -60,6 +60,7 @@ Command:
     | CommandZoom EOL {}
     | CommandMove EOL {}
     | CommandDeselect EOL {}
+    | CommandRotate EOL {}
     ;
 
 CommandCreate:
@@ -127,6 +128,10 @@ CommandMove:
 
 CommandZoom:
   ZOOM REAL {Zoom(&image,$2);}
+  ;
+
+CommandRotate:
+  ROTATE NUM {Rotate(&image,$2);}
   ;
 
 %%

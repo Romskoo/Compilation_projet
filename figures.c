@@ -149,12 +149,18 @@ void Dump_figures_file(Image image, char* file){
                 if(figure.options.flags.F_ZOOM == 1){
                     fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0],figure.centre[1]);
                 }
+                if(figure.options.flags.F_ROTATE == 1){
+                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,figure.centre[0],figure.centre[1]);
+                }
                 fprintf(fp,"/>");
                 break;
             case T_LINE:
                 fprintf(fp,"<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"%d\" visibility=\"%s\" ",figure.coord1[0],figure.coord1[1],figure.coord2[0],figure.coord2[1],figure.options.couleur_tour,figure.options.epaisseur,figure.options.visibility);
                 if(figure.options.flags.F_ZOOM == 1){
                     fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,(figure.coord1[0]+figure.coord2[0])/2,(figure.coord1[1]+figure.coord2[1])/2);
+                }
+                if(figure.options.flags.F_ROTATE == 1){
+                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,(figure.coord1[0]+figure.coord2[0])/2,(figure.coord1[1]+figure.coord2[1])/2);
                 }
                 fprintf(fp,"/>");
                 break;
@@ -163,12 +169,18 @@ void Dump_figures_file(Image image, char* file){
                 if(figure.options.flags.F_ZOOM == 1){
                     fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0]+figure.dimensions[0]/2,figure.centre[1]+figure.dimensions[1]/2);
                 }
+                if(figure.options.flags.F_ROTATE == 1){
+                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,figure.centre[0]+figure.dimensions[0]/2,figure.centre[1]+figure.dimensions[1]/2);
+                }
                 fprintf(fp,"/>");
                 break;
             case T_TEXT:
                 fprintf(fp,"<text x=\"%d\" y=\"%d\" fill=\"%s\" font-size=\"%d\" visibility=\"%s\" text-anchor=\"middle\" ",figure.centre[0],figure.centre[1],figure.options.couleur_remplissage,figure.options.fontsize,figure.options.visibility);
                 if(figure.options.flags.F_ZOOM == 1){
                     fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0],figure.centre[1]-figure.options.fontsize/2);
+                }
+                if(figure.options.flags.F_ROTATE == 1){
+                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,figure.centre[0],figure.centre[1]-figure.options.fontsize/2);
                 }
                 fprintf(fp,">%s</text>",figure.texte);
                 break;
@@ -315,6 +327,17 @@ void Zoom(Image* image,float zoom){
             Figure *figure = image->figures[i];
             figure->options.flags.F_ZOOM = 1;
             figure->options.zoom = zoom;
+            //free(figure);
+        }
+    }
+}
+
+void Rotate(Image* image,int rotation){
+     for(int i=0;i<image->nb_figures;i++){
+        if(image->figures[i]->is_selected == 1){
+            Figure *figure = image->figures[i];
+            figure->options.flags.F_ROTATE = 1;
+            figure->options.rotation = rotation;
             //free(figure);
         }
     }
