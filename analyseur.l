@@ -10,9 +10,10 @@ nom [a-zA-Z][a-zA-Z|0-9|-|_]*
 chaine_car \"(\\(.|\n)|[^\\"\n])*\"
 hexa [0-9a-fA-F]
 couleur #({hexa}{6}|{hexa}{3})
-num -?{integer}*
+num -?{integer}+
 coord \({num},{num}\)
 dimension {num}x{num}
+real {integer}+,{integer}+
 
 %option noyywrap
 %%
@@ -68,6 +69,10 @@ dimension {num}x{num}
 {nom} {
   yylval.nom = strdup(yytext);
   return NOM;}
+{real} {
+  yylval.real = str_to_float(yytext);
+  return REAL;
+}
 
 "\n"  { return EOL; }
 

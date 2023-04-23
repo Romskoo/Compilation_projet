@@ -18,6 +18,8 @@ typedef struct {
     int F_FILL_COLOR;
     int F_EDGE_COLOR;
     int F_THICKNESS;
+    int F_ZOOM;
+    int F_ROTATE;
 } OPTIONS_FLAGS;
 
 struct Options{
@@ -27,6 +29,8 @@ struct Options{
     int epaisseur;
     char* visibility;
     int fontsize;
+    float zoom;
+    int rotate;
 };
 typedef struct Options Options;
 
@@ -90,5 +94,7 @@ void Set_selected(Image* image,char* nom,int is_selected);
 void Set_selected_all(Image* image, int is_selected);
 
 void Move(Image* image,char* mouvement);
+
+void Zoom(Image* image,float zoom);
 
 #endif

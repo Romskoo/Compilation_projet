@@ -25,6 +25,7 @@ Image image ;
     char* dimensions;
     int entier;
     Options* opt;
+    float real;
 }
 
 
@@ -35,6 +36,7 @@ Image image ;
 %token <str> CHAINE_CAR
 %token <couleur> COULEUR
 %token <dimensions> DIMENSION  
+%token <real> REAL
 
 %type <opt> SetOptions
 
@@ -124,7 +126,7 @@ CommandMove:
   ;
 
 CommandZoom:
-  ZOOM COORD {}
+  ZOOM REAL {Zoom(&image,$2);}
   ;
 
 %%

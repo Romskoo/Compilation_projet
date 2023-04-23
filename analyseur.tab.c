@@ -150,21 +150,22 @@ enum yysymbol_kind_t
   YYSYMBOL_CHAINE_CAR = 38,                /* CHAINE_CAR  */
   YYSYMBOL_COULEUR = 39,                   /* COULEUR  */
   YYSYMBOL_DIMENSION = 40,                 /* DIMENSION  */
-  YYSYMBOL_YYACCEPT = 41,                  /* $accept  */
-  YYSYMBOL_S = 42,                         /* S  */
-  YYSYMBOL_Command = 43,                   /* Command  */
-  YYSYMBOL_CommandCreate = 44,             /* CommandCreate  */
-  YYSYMBOL_CommandDump = 45,               /* CommandDump  */
-  YYSYMBOL_CommandDelete = 46,             /* CommandDelete  */
-  YYSYMBOL_CommandRename = 47,             /* CommandRename  */
-  YYSYMBOL_CommandSet = 48,                /* CommandSet  */
-  YYSYMBOL_SetOptions = 49,                /* SetOptions  */
-  YYSYMBOL_CommandSelect = 50,             /* CommandSelect  */
-  YYSYMBOL_SelectNames = 51,               /* SelectNames  */
-  YYSYMBOL_CommandDeselect = 52,           /* CommandDeselect  */
-  YYSYMBOL_DeselectNames = 53,             /* DeselectNames  */
-  YYSYMBOL_CommandMove = 54,               /* CommandMove  */
-  YYSYMBOL_CommandZoom = 55                /* CommandZoom  */
+  YYSYMBOL_REAL = 41,                      /* REAL  */
+  YYSYMBOL_YYACCEPT = 42,                  /* $accept  */
+  YYSYMBOL_S = 43,                         /* S  */
+  YYSYMBOL_Command = 44,                   /* Command  */
+  YYSYMBOL_CommandCreate = 45,             /* CommandCreate  */
+  YYSYMBOL_CommandDump = 46,               /* CommandDump  */
+  YYSYMBOL_CommandDelete = 47,             /* CommandDelete  */
+  YYSYMBOL_CommandRename = 48,             /* CommandRename  */
+  YYSYMBOL_CommandSet = 49,                /* CommandSet  */
+  YYSYMBOL_SetOptions = 50,                /* SetOptions  */
+  YYSYMBOL_CommandSelect = 51,             /* CommandSelect  */
+  YYSYMBOL_SelectNames = 52,               /* SelectNames  */
+  YYSYMBOL_CommandDeselect = 53,           /* CommandDeselect  */
+  YYSYMBOL_DeselectNames = 54,             /* DeselectNames  */
+  YYSYMBOL_CommandMove = 55,               /* CommandMove  */
+  YYSYMBOL_CommandZoom = 56                /* CommandZoom  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -489,7 +490,7 @@ union yyalloc
 #define YYLAST   99
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  41
+#define YYNTOKENS  42
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  15
 /* YYNRULES -- Number of rules.  */
@@ -498,7 +499,7 @@ union yyalloc
 #define YYNSTATES  102
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   295
+#define YYMAXUTOK   296
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -541,18 +542,18 @@ static const yytype_int8 yytranslate[] =
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40
+      35,    36,    37,    38,    39,    40,    41
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    45,    45,    46,    51,    52,    53,    54,    55,    56,
-      57,    58,    59,    60,    64,    65,    66,    67,    68,    69,
-      70,    74,    75,    79,    83,    87,    91,    92,    93,    94,
-      95,    96,    97,    98,   102,   103,   107,   108,   112,   113,
-     117,   118,   123,   127
+       0,    47,    47,    48,    53,    54,    55,    56,    57,    58,
+      59,    60,    61,    62,    66,    67,    68,    69,    70,    71,
+      72,    76,    77,    81,    85,    89,    93,    94,    95,    96,
+      97,    98,    99,   100,   104,   105,   109,   110,   114,   115,
+     119,   120,   125,   129
 };
 #endif
 
@@ -573,8 +574,8 @@ static const char *const yytname[] =
   "FILL", "FONTSIZE", "FOREACH", "INVISIBLE", "LINE", "MOVE", "NOFILL",
   "POLYGON", "RADIUS", "RENAME", "RECTANGLE", "ROTATE", "SELECT", "SET",
   "TEXT", "THICKNESS", "VISIBLE", "WITH", "ZOOM", "EOL", "VIRGULE", "NOM",
-  "COORD", "NUM", "CHAINE_CAR", "COULEUR", "DIMENSION", "$accept", "S",
-  "Command", "CommandCreate", "CommandDump", "CommandDelete",
+  "COORD", "NUM", "CHAINE_CAR", "COULEUR", "DIMENSION", "REAL", "$accept",
+  "S", "Command", "CommandCreate", "CommandDump", "CommandDelete",
   "CommandRename", "CommandSet", "SetOptions", "CommandSelect",
   "SelectNames", "CommandDeselect", "DeselectNames", "CommandMove",
   "CommandZoom", YY_NULLPTR
@@ -596,7 +597,7 @@ static const yytype_int16 yytoknum[] =
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295
+     295,   296
 };
 #endif
 
@@ -614,7 +615,7 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      36,    22,   -32,    -1,   -34,   -30,   -28,     6,   -27,   -26,
+      36,    22,   -32,    -1,   -34,   -30,   -28,     6,   -27,   -31,
      -37,     5,   -37,   -18,   -17,   -15,   -14,   -13,   -12,     0,
       14,    16,    -5,    17,    18,    21,   -37,   -37,    23,   -37,
      -37,    20,   -37,    24,    50,   -37,   -37,   -37,   -37,   -37,
@@ -679,7 +680,7 @@ static const yytype_int8 yytable[] =
 static const yytype_int8 yycheck[] =
 {
        4,     4,     3,    35,    38,     0,    36,    35,    35,     3,
-      36,     4,     7,     8,     9,    33,    33,    12,    33,    33,
+      41,     4,     7,     8,     9,    33,    33,    12,    33,    33,
       33,    33,    58,    59,    19,    61,    62,     5,    23,    22,
       35,    26,    27,    33,    35,    38,    40,    32,    33,    75,
       18,    35,    78,     7,     8,     9,    24,    33,    12,    33,
@@ -695,26 +696,26 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     7,     8,     9,    12,    19,    23,    26,    27,    32,
-      33,    42,    43,    44,    45,    46,    47,    48,    50,    52,
-      54,    55,     5,    18,    24,    28,    35,     3,    35,    38,
-      36,    35,     3,    35,    35,    36,     0,    43,    33,    33,
+      33,    43,    44,    45,    46,    47,    48,    49,    51,    53,
+      55,    56,     5,    18,    24,    28,    35,     3,    35,    38,
+      36,    35,     3,    35,    35,    41,     0,    44,    33,    33,
       33,    33,    33,    33,    33,    33,    33,    35,    35,    35,
-      35,    34,    53,    31,    34,    51,    14,    15,    17,    20,
-      29,    30,    39,    49,     4,    22,    36,     4,    40,     4,
-      38,    35,    35,    35,    31,    37,    49,    49,    37,    49,
-      49,    36,    37,    36,    36,     4,    36,     4,    53,    51,
-      39,    49,    49,    22,     4,    40,    36,    38,    36,    49,
+      35,    34,    54,    31,    34,    52,    14,    15,    17,    20,
+      29,    30,    39,    50,     4,    22,    36,     4,    40,     4,
+      38,    35,    35,    35,    31,    37,    50,    50,    37,    50,
+      50,    36,    37,    36,    36,     4,    36,     4,    54,    52,
+      39,    50,    50,    22,     4,    40,    36,    38,    36,    50,
       37,    36
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    41,    42,    42,    43,    43,    43,    43,    43,    43,
-      43,    43,    43,    43,    44,    44,    44,    44,    44,    44,
-      44,    45,    45,    46,    47,    48,    49,    49,    49,    49,
-      49,    49,    49,    49,    50,    50,    51,    51,    52,    52,
-      53,    53,    54,    55
+       0,    42,    43,    43,    44,    44,    44,    44,    44,    44,
+      44,    44,    44,    44,    45,    45,    45,    45,    45,    45,
+      45,    46,    46,    47,    48,    49,    50,    50,    50,    50,
+      50,    50,    50,    50,    51,    51,    52,    52,    53,    53,
+      54,    54,    55,    56
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1192,259 +1193,259 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* S: Command  */
-#line 45 "analyseur.y"
+#line 47 "analyseur.y"
                             { }
-#line 1198 "analyseur.tab.c"
+#line 1199 "analyseur.tab.c"
     break;
 
   case 3: /* S: S Command  */
-#line 46 "analyseur.y"
+#line 48 "analyseur.y"
                             { }
-#line 1204 "analyseur.tab.c"
+#line 1205 "analyseur.tab.c"
     break;
 
   case 4: /* Command: EOL  */
-#line 51 "analyseur.y"
+#line 53 "analyseur.y"
         {printf("VIDE\n");}
-#line 1210 "analyseur.tab.c"
+#line 1211 "analyseur.tab.c"
     break;
 
   case 5: /* Command: CommandCreate EOL  */
-#line 52 "analyseur.y"
+#line 54 "analyseur.y"
                         {}
-#line 1216 "analyseur.tab.c"
+#line 1217 "analyseur.tab.c"
     break;
 
   case 6: /* Command: CommandDump EOL  */
-#line 53 "analyseur.y"
+#line 55 "analyseur.y"
                       {}
-#line 1222 "analyseur.tab.c"
+#line 1223 "analyseur.tab.c"
     break;
 
   case 7: /* Command: CommandDelete EOL  */
-#line 54 "analyseur.y"
+#line 56 "analyseur.y"
                         {}
-#line 1228 "analyseur.tab.c"
+#line 1229 "analyseur.tab.c"
     break;
 
   case 8: /* Command: CommandRename EOL  */
-#line 55 "analyseur.y"
+#line 57 "analyseur.y"
                         {}
-#line 1234 "analyseur.tab.c"
+#line 1235 "analyseur.tab.c"
     break;
 
   case 9: /* Command: CommandSet EOL  */
-#line 56 "analyseur.y"
+#line 58 "analyseur.y"
                      {}
-#line 1240 "analyseur.tab.c"
+#line 1241 "analyseur.tab.c"
     break;
 
   case 10: /* Command: CommandSelect EOL  */
-#line 57 "analyseur.y"
+#line 59 "analyseur.y"
                         {}
-#line 1246 "analyseur.tab.c"
+#line 1247 "analyseur.tab.c"
     break;
 
   case 11: /* Command: CommandZoom EOL  */
-#line 58 "analyseur.y"
+#line 60 "analyseur.y"
                       {}
-#line 1252 "analyseur.tab.c"
+#line 1253 "analyseur.tab.c"
     break;
 
   case 12: /* Command: CommandMove EOL  */
-#line 59 "analyseur.y"
+#line 61 "analyseur.y"
                       {}
-#line 1258 "analyseur.tab.c"
+#line 1259 "analyseur.tab.c"
     break;
 
   case 13: /* Command: CommandDeselect EOL  */
-#line 60 "analyseur.y"
+#line 62 "analyseur.y"
                           {}
-#line 1264 "analyseur.tab.c"
+#line 1265 "analyseur.tab.c"
     break;
 
   case 14: /* CommandCreate: CREATE CIRCLE NOM AT COORD RADIUS NUM  */
-#line 64 "analyseur.y"
+#line 66 "analyseur.y"
                                                    {Add_figure(&image,Create_circle((yyvsp[-4].nom),(yyvsp[-2].coord),(yyvsp[0].entier))); }
-#line 1270 "analyseur.tab.c"
+#line 1271 "analyseur.tab.c"
     break;
 
   case 15: /* CommandCreate: CREATE CIRCLE NOM RADIUS NUM AT COORD  */
-#line 65 "analyseur.y"
+#line 67 "analyseur.y"
                                                {Add_figure(&image,Create_circle((yyvsp[-4].nom),(yyvsp[0].coord),(yyvsp[-2].entier)));}
-#line 1276 "analyseur.tab.c"
+#line 1277 "analyseur.tab.c"
     break;
 
   case 16: /* CommandCreate: CREATE LINE NOM COORD COORD  */
-#line 66 "analyseur.y"
+#line 68 "analyseur.y"
                                      {Add_figure(&image,Create_line((yyvsp[-2].nom),(yyvsp[-1].coord),(yyvsp[0].coord)));}
-#line 1282 "analyseur.tab.c"
+#line 1283 "analyseur.tab.c"
     break;
 
   case 17: /* CommandCreate: CREATE RECTANGLE NOM AT COORD DIMENSION  */
-#line 67 "analyseur.y"
+#line 69 "analyseur.y"
                                                  {Add_figure(&image,Create_rectangle((yyvsp[-3].nom),(yyvsp[-1].coord),(yyvsp[0].dimensions)));}
-#line 1288 "analyseur.tab.c"
+#line 1289 "analyseur.tab.c"
     break;
 
   case 18: /* CommandCreate: CREATE RECTANGLE NOM DIMENSION AT COORD  */
-#line 68 "analyseur.y"
+#line 70 "analyseur.y"
                                                  {Add_figure(&image,Create_rectangle((yyvsp[-3].nom),(yyvsp[0].coord),(yyvsp[-2].dimensions)));}
-#line 1294 "analyseur.tab.c"
+#line 1295 "analyseur.tab.c"
     break;
 
   case 19: /* CommandCreate: CREATE TEXT NOM AT COORD CHAINE_CAR  */
-#line 69 "analyseur.y"
+#line 71 "analyseur.y"
                                             {Add_figure(&image,Create_text((yyvsp[-3].nom),(yyvsp[0].str),(yyvsp[-1].coord)));}
-#line 1300 "analyseur.tab.c"
+#line 1301 "analyseur.tab.c"
     break;
 
   case 20: /* CommandCreate: CREATE TEXT NOM CHAINE_CAR AT COORD  */
-#line 70 "analyseur.y"
+#line 72 "analyseur.y"
                                             {Add_figure(&image,Create_text((yyvsp[-3].nom),(yyvsp[-2].str),(yyvsp[0].coord)));}
-#line 1306 "analyseur.tab.c"
+#line 1307 "analyseur.tab.c"
     break;
 
   case 21: /* CommandDump: DUMP  */
-#line 74 "analyseur.y"
+#line 76 "analyseur.y"
        {Dump_figures(image);}
-#line 1312 "analyseur.tab.c"
+#line 1313 "analyseur.tab.c"
     break;
 
   case 22: /* CommandDump: DUMP CHAINE_CAR  */
-#line 75 "analyseur.y"
+#line 77 "analyseur.y"
                     {Dump_figures_file(image,(yyvsp[0].str));}
-#line 1318 "analyseur.tab.c"
+#line 1319 "analyseur.tab.c"
     break;
 
   case 23: /* CommandDelete: DELETE NOM  */
-#line 79 "analyseur.y"
+#line 81 "analyseur.y"
              {Delete_figure(&image,(yyvsp[0].nom));}
-#line 1324 "analyseur.tab.c"
+#line 1325 "analyseur.tab.c"
     break;
 
   case 24: /* CommandRename: RENAME NOM WITH NOM  */
-#line 83 "analyseur.y"
+#line 85 "analyseur.y"
                       {Rename_figure(&image,(yyvsp[-2].nom),(yyvsp[0].nom));}
-#line 1330 "analyseur.tab.c"
+#line 1331 "analyseur.tab.c"
     break;
 
   case 25: /* CommandSet: SET NOM SetOptions  */
-#line 87 "analyseur.y"
+#line 89 "analyseur.y"
                      {Set_options(&image,(yyvsp[-1].nom),(yyvsp[0].opt));}
-#line 1336 "analyseur.tab.c"
+#line 1337 "analyseur.tab.c"
     break;
 
   case 26: /* SetOptions: %empty  */
-#line 91 "analyseur.y"
+#line 93 "analyseur.y"
          {(yyval.opt) = Default_options();}
-#line 1342 "analyseur.tab.c"
+#line 1343 "analyseur.tab.c"
     break;
 
   case 27: /* SetOptions: COULEUR SetOptions  */
-#line 92 "analyseur.y"
+#line 94 "analyseur.y"
                        {(yyval.opt) = Set_couleur_tour((yyvsp[0].opt),(yyvsp[-1].couleur));}
-#line 1348 "analyseur.tab.c"
+#line 1349 "analyseur.tab.c"
     break;
 
   case 28: /* SetOptions: THICKNESS NUM SetOptions  */
-#line 93 "analyseur.y"
+#line 95 "analyseur.y"
                              {(yyval.opt) = Set_epaisseur((yyvsp[0].opt),(yyvsp[-1].entier));}
-#line 1354 "analyseur.tab.c"
+#line 1355 "analyseur.tab.c"
     break;
 
   case 29: /* SetOptions: FILL WITH COULEUR SetOptions  */
-#line 94 "analyseur.y"
+#line 96 "analyseur.y"
                                  {(yyval.opt) = Set_couleur_remplissage((yyvsp[0].opt),(yyvsp[-1].couleur)); }
-#line 1360 "analyseur.tab.c"
+#line 1361 "analyseur.tab.c"
     break;
 
   case 30: /* SetOptions: NOFILL SetOptions  */
-#line 95 "analyseur.y"
+#line 97 "analyseur.y"
                       {(yyval.opt) = Set_couleur_remplissage((yyvsp[0].opt),"transparent");}
-#line 1366 "analyseur.tab.c"
+#line 1367 "analyseur.tab.c"
     break;
 
   case 31: /* SetOptions: INVISIBLE SetOptions  */
-#line 96 "analyseur.y"
+#line 98 "analyseur.y"
                          {(yyval.opt) = Set_visibility((yyvsp[0].opt),"hidden");}
-#line 1372 "analyseur.tab.c"
+#line 1373 "analyseur.tab.c"
     break;
 
   case 32: /* SetOptions: VISIBLE SetOptions  */
-#line 97 "analyseur.y"
+#line 99 "analyseur.y"
                        {(yyval.opt) = Set_visibility((yyvsp[0].opt),"visible");}
-#line 1378 "analyseur.tab.c"
+#line 1379 "analyseur.tab.c"
     break;
 
   case 33: /* SetOptions: FONTSIZE NUM SetOptions  */
-#line 98 "analyseur.y"
+#line 100 "analyseur.y"
                             {(yyval.opt) = Set_fontsize((yyvsp[0].opt),(yyvsp[-1].entier));}
-#line 1384 "analyseur.tab.c"
+#line 1385 "analyseur.tab.c"
     break;
 
   case 34: /* CommandSelect: SELECT ALL  */
-#line 102 "analyseur.y"
+#line 104 "analyseur.y"
              {Set_selected_all(&image,1);}
-#line 1390 "analyseur.tab.c"
+#line 1391 "analyseur.tab.c"
     break;
 
   case 35: /* CommandSelect: SELECT NOM SelectNames  */
-#line 103 "analyseur.y"
+#line 105 "analyseur.y"
                            {Set_selected(&image,(yyvsp[-1].nom),1);}
-#line 1396 "analyseur.tab.c"
+#line 1397 "analyseur.tab.c"
     break;
 
   case 36: /* SelectNames: %empty  */
-#line 107 "analyseur.y"
+#line 109 "analyseur.y"
          {}
-#line 1402 "analyseur.tab.c"
+#line 1403 "analyseur.tab.c"
     break;
 
   case 37: /* SelectNames: VIRGULE NOM SelectNames  */
-#line 108 "analyseur.y"
+#line 110 "analyseur.y"
                              {Set_selected(&image,(yyvsp[-1].nom),1);}
-#line 1408 "analyseur.tab.c"
+#line 1409 "analyseur.tab.c"
     break;
 
   case 38: /* CommandDeselect: DESELECT ALL  */
-#line 112 "analyseur.y"
+#line 114 "analyseur.y"
                {Set_selected_all(&image,0);}
-#line 1414 "analyseur.tab.c"
+#line 1415 "analyseur.tab.c"
     break;
 
   case 39: /* CommandDeselect: DESELECT NOM DeselectNames  */
-#line 113 "analyseur.y"
+#line 115 "analyseur.y"
                                {Set_selected(&image,(yyvsp[-1].nom),0);}
-#line 1420 "analyseur.tab.c"
+#line 1421 "analyseur.tab.c"
     break;
 
   case 40: /* DeselectNames: %empty  */
-#line 117 "analyseur.y"
+#line 119 "analyseur.y"
          {}
-#line 1426 "analyseur.tab.c"
+#line 1427 "analyseur.tab.c"
     break;
 
   case 41: /* DeselectNames: VIRGULE NOM DeselectNames  */
-#line 118 "analyseur.y"
+#line 120 "analyseur.y"
                                {Set_selected(&image,(yyvsp[-1].nom),0);}
-#line 1432 "analyseur.tab.c"
+#line 1433 "analyseur.tab.c"
     break;
 
   case 42: /* CommandMove: MOVE COORD  */
-#line 123 "analyseur.y"
+#line 125 "analyseur.y"
              {Move(&image,(yyvsp[0].coord));}
-#line 1438 "analyseur.tab.c"
+#line 1439 "analyseur.tab.c"
     break;
 
-  case 43: /* CommandZoom: ZOOM COORD  */
-#line 127 "analyseur.y"
-             {}
-#line 1444 "analyseur.tab.c"
+  case 43: /* CommandZoom: ZOOM REAL  */
+#line 129 "analyseur.y"
+            {Zoom(&image,(yyvsp[0].real));}
+#line 1445 "analyseur.tab.c"
     break;
 
 
-#line 1448 "analyseur.tab.c"
+#line 1449 "analyseur.tab.c"
 
       default: break;
     }
@@ -1638,7 +1639,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 130 "analyseur.y"
+#line 132 "analyseur.y"
 
 
 int yyerror(char *s) {

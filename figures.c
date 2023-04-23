@@ -71,11 +71,13 @@ Options* Default_options(){
     options->epaisseur = 1;
     options->visibility = "visible";
     options->fontsize = 10;
+    options->zoom = 1.0 ;
     options->flags.F_FONTSIZE = 0;
     options->flags.F_VISIBLE = 0;
     options->flags.F_FILL_COLOR = 0;
     options->flags.F_EDGE_COLOR = 0;
     options->flags.F_THICKNESS = 0;
+    options->flags.F_ZOOM = 0;
     return options;
 }
 
@@ -140,18 +142,35 @@ void Dump_figures_file(Image image, char* file){
     fprintf(fp,"<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"0\" y=\"0\" width=\"800\" height=\"600\" fill=\"none\" stroke=\"black\"/>");
 
     for(int i=0;i<image.nb_figures;i++){
-        switch(image.figures[i]->type){
+        Figure figure = *image.figures[i];
+        switch(figure.type){
             case T_CIRCLE:
-                fprintf(fp,"<circle cx=\"%d\" cy=\"%d\" r=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" />",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->radius,image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.couleur_remplissage,image.figures[i]->options.visibility);
+                fprintf(fp,"<circle cx=\"%d\" cy=\"%d\" r=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" ",figure.centre[0],figure.centre[1],figure.radius,figure.options.couleur_tour,figure.options.epaisseur,figure.options.couleur_remplissage,figure.options.visibility);
+                if(figure.options.flags.F_ZOOM == 1){
+                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0],figure.centre[1]);
+                }
+                fprintf(fp,"/>");
                 break;
             case T_LINE:
-                fprintf(fp,"<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"%d\" visibility=\"%s\" />",image.figures[i]->coord1[0],image.figures[i]->coord1[1],image.figures[i]->coord2[0],image.figures[i]->coord2[1],image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.visibility);
+                fprintf(fp,"<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"%d\" visibility=\"%s\" ",figure.coord1[0],figure.coord1[1],figure.coord2[0],figure.coord2[1],figure.options.couleur_tour,figure.options.epaisseur,figure.options.visibility);
+                if(figure.options.flags.F_ZOOM == 1){
+                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,(figure.coord1[0]+figure.coord2[0])/2,(figure.coord1[1]+figure.coord2[1])/2);
+                }
+                fprintf(fp,"/>");
                 break;
             case T_RECTANGLE:
-                fprintf(fp,"<rect x=\"%d\" y=\"%d\" height=\"%d\" width=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" />",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->dimensions[0],image.figures[i]->dimensions[1],image.figures[i]->options.couleur_tour,image.figures[i]->options.epaisseur,image.figures[i]->options.couleur_remplissage,image.figures[i]->options.visibility);
+                fprintf(fp,"<rect x=\"%d\" y=\"%d\" height=\"%d\" width=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" ",figure.centre[0],figure.centre[1],figure.dimensions[0],figure.dimensions[1],figure.options.couleur_tour,figure.options.epaisseur,figure.options.couleur_remplissage,figure.options.visibility);
+                if(figure.options.flags.F_ZOOM == 1){
+                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0]+figure.dimensions[0]/2,figure.centre[1]+figure.dimensions[1]/2);
+                }
+                fprintf(fp,"/>");
                 break;
             case T_TEXT:
-                fprintf(fp,"<text x=\"%d\" y=\"%d\" fill=\"%s\" font-size=\"%d\" visibility=\"%s\" >%s</text>",image.figures[i]->centre[0],image.figures[i]->centre[1],image.figures[i]->options.couleur_remplissage,image.figures[i]->options.fontsize,image.figures[i]->options.visibility,image.figures[i]->texte);
+                fprintf(fp,"<text x=\"%d\" y=\"%d\" fill=\"%s\" font-size=\"%d\" visibility=\"%s\" text-anchor=\"middle\" ",figure.centre[0],figure.centre[1],figure.options.couleur_remplissage,figure.options.fontsize,figure.options.visibility);
+                if(figure.options.flags.F_ZOOM == 1){
+                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0],figure.centre[1]-figure.options.fontsize/2);
+                }
+                fprintf(fp,">%s</text>",figure.texte);
                 break;
         }
        
@@ -270,30 +289,34 @@ void Move(Image* image,char* mouvement){
     int* coords = str_to_coord(mouvement);
     for(int i=0;i<image->nb_figures;i++){
         if(image->figures[i]->is_selected == 1){
-            switch(image->figures[i]->type){
+            Figure *figure = image->figures[i];
+            switch(figure->type){
                 case T_CIRCLE:
                 case T_RECTANGLE:
                 case T_TEXT:
-                    image->figures[i]->centre[0] += coords[0];
-                    image->figures[i]->centre[1] += coords[1];
+                    figure->centre[0] += coords[0];
+                    figure->centre[1] += coords[1];
                     break;
                 case T_LINE:
-                    image->figures[i]->coord1[0] += coords[0];
-                    image->figures[i]->coord1[1] += coords[1];
-                    image->figures[i]->coord2[0] += coords[0];
-                    image->figures[i]->coord2[1] += coords[1];
+                    figure->coord1[0] += coords[0];
+                    figure->coord1[1] += coords[1];
+                    figure->coord2[0] += coords[0];
+                    figure->coord2[1] += coords[1];
                     break;
-            }       
+            }     
+            //free(figure);  
         }
     }
 }
 
-/*
-void delete_elem_array(void* tab,int e){
-    int size = sizeof(tab) / sizeof(tab[0]);
-    for(int i = e;i<size;i++){
-        tab[i] = tab[i+1];
+void Zoom(Image* image,float zoom){
+     for(int i=0;i<image->nb_figures;i++){
+        if(image->figures[i]->is_selected == 1){
+            Figure *figure = image->figures[i];
+            figure->options.flags.F_ZOOM = 1;
+            figure->options.zoom = zoom;
+            //free(figure);
+        }
     }
-    tab = realloc(tab,sizeof(tab[0])*size-1);
 }
-*/
+

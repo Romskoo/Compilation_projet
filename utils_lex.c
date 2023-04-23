@@ -11,3 +11,11 @@ char* string_no_quotes(char* str){
     //str = realloc(str,strlen(str)-1);
     return str;
 }
+
+float str_to_float(char* str){
+    char* ptr = strchr(str, ',');
+    if (ptr != NULL) {
+        *ptr = '.';
+    }
+    return atof(str);
+}

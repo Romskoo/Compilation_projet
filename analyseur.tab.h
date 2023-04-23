@@ -97,7 +97,8 @@ extern int yydebug;
     NUM = 292,                     /* NUM  */
     CHAINE_CAR = 293,              /* CHAINE_CAR  */
     COULEUR = 294,                 /* COULEUR  */
-    DIMENSION = 295                /* DIMENSION  */
+    DIMENSION = 295,               /* DIMENSION  */
+    REAL = 296                     /* REAL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -116,8 +117,9 @@ union YYSTYPE
     char* dimensions;
     int entier;
     Options* opt;
+    float real;
 
-#line 121 "analyseur.tab.h"
+#line 123 "analyseur.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

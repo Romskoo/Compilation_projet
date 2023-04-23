@@ -7,4 +7,6 @@
 
 char* string_no_quotes(char* str);
 
+float str_to_float(char* str);
+
 #endif
