@@ -138,51 +138,59 @@ void Dump_figures_file(Image image, char* file){
 
     FILE* fp = fopen( file, "w" );
 
-    fprintf(fp,"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"800\" height=\"600\" viewBox=\"0 0 800 600\">");
-    fprintf(fp,"<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"0\" y=\"0\" width=\"800\" height=\"600\" fill=\"none\" stroke=\"black\"/>");
+    fprintf(fp,"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"800\" height=\"600\" viewBox=\"0 0 800 600\">\n");
+    fprintf(fp,"<rect xmlns=\"http://www.w3.org/2000/svg\" x=\"0\" y=\"0\" width=\"800\" height=\"600\" fill=\"none\" stroke=\"black\"/>\n");
 
     for(int i=0;i<image.nb_figures;i++){
         Figure figure = *image.figures[i];
         switch(figure.type){
             case T_CIRCLE:
                 fprintf(fp,"<circle cx=\"%d\" cy=\"%d\" r=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" ",figure.centre[0],figure.centre[1],figure.radius,figure.options.couleur_tour,figure.options.epaisseur,figure.options.couleur_remplissage,figure.options.visibility);
+                fprintf(fp,"transform=\"");
                 if(figure.options.flags.F_ZOOM == 1){
-                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0],figure.centre[1]);
+                    fprintf(fp,"scale(%2.6f) ",figure.options.zoom);
                 }
                 if(figure.options.flags.F_ROTATE == 1){
-                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,figure.centre[0],figure.centre[1]);
+                    fprintf(fp,"rotate(%d) ",figure.options.rotation);
                 }
-                fprintf(fp,"/>");
+                fprintf(fp,"\" transform-origin=\"%d %d\" ",figure.centre[0],figure.centre[1]);
+                fprintf(fp,"/>\n");
                 break;
             case T_LINE:
                 fprintf(fp,"<line x1=\"%d\" y1=\"%d\" x2=\"%d\" y2=\"%d\" stroke=\"%s\" stroke-width=\"%d\" visibility=\"%s\" ",figure.coord1[0],figure.coord1[1],figure.coord2[0],figure.coord2[1],figure.options.couleur_tour,figure.options.epaisseur,figure.options.visibility);
+                fprintf(fp,"transform=\"");
                 if(figure.options.flags.F_ZOOM == 1){
-                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,(figure.coord1[0]+figure.coord2[0])/2,(figure.coord1[1]+figure.coord2[1])/2);
+                    fprintf(fp,"scale(%2.6f) ",figure.options.zoom);
                 }
                 if(figure.options.flags.F_ROTATE == 1){
-                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,(figure.coord1[0]+figure.coord2[0])/2,(figure.coord1[1]+figure.coord2[1])/2);
+                    fprintf(fp,"rotate(%d) ",figure.options.rotation);
                 }
-                fprintf(fp,"/>");
+                fprintf(fp,"\" transform-origin=\"%d %d\" ",(figure.coord1[0]+figure.coord2[0])/2,(figure.coord1[1]+figure.coord2[1])/2);
+                fprintf(fp,"/>\n");
                 break;
             case T_RECTANGLE:
                 fprintf(fp,"<rect x=\"%d\" y=\"%d\" height=\"%d\" width=\"%d\" stroke=\"%s\" stroke-width=\"%d\" fill=\"%s\" visibility=\"%s\" ",figure.centre[0],figure.centre[1],figure.dimensions[0],figure.dimensions[1],figure.options.couleur_tour,figure.options.epaisseur,figure.options.couleur_remplissage,figure.options.visibility);
+                fprintf(fp,"transform=\"");
                 if(figure.options.flags.F_ZOOM == 1){
-                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0]+figure.dimensions[0]/2,figure.centre[1]+figure.dimensions[1]/2);
+                    fprintf(fp,"scale(%2.6f) ",figure.options.zoom);
                 }
                 if(figure.options.flags.F_ROTATE == 1){
-                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,figure.centre[0]+figure.dimensions[0]/2,figure.centre[1]+figure.dimensions[1]/2);
+                    fprintf(fp,"rotate(%d) ",figure.options.rotation);
                 }
-                fprintf(fp,"/>");
+                fprintf(fp,"\" transform-origin=\"%d %d\" ",figure.centre[0]+figure.dimensions[0]/2,figure.centre[1]+figure.dimensions[1]/2);
+                fprintf(fp,"/>\n");
                 break;
             case T_TEXT:
                 fprintf(fp,"<text x=\"%d\" y=\"%d\" fill=\"%s\" font-size=\"%d\" visibility=\"%s\" text-anchor=\"middle\" ",figure.centre[0],figure.centre[1],figure.options.couleur_remplissage,figure.options.fontsize,figure.options.visibility);
+                fprintf(fp,"transform=\"");
                 if(figure.options.flags.F_ZOOM == 1){
-                    fprintf(fp,"transform=\"scale(%2.6f)\" transform-origin=\"%d %d\" ",figure.options.zoom,figure.centre[0],figure.centre[1]-figure.options.fontsize/2);
+                    fprintf(fp,"scale(%2.6f) ",figure.options.zoom);
                 }
                 if(figure.options.flags.F_ROTATE == 1){
-                    fprintf(fp,"transform=\"rotate(%d)\" transform-origin=\"%d %d\" ",figure.options.rotation,figure.centre[0],figure.centre[1]-figure.options.fontsize/2);
+                    fprintf(fp,"rotate(%d) ",figure.options.rotation);
                 }
-                fprintf(fp,">%s</text>",figure.texte);
+                fprintf(fp,"\" transform-origin=\"%d %d\" ",figure.centre[0],figure.centre[1]-figure.options.fontsize/2);
+                fprintf(fp,">%s</text>\n",figure.texte);
                 break;
         }
        
